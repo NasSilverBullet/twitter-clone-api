@@ -1,11 +1,11 @@
 version: "3"
 services:
-  api:
+  app:
     container_name: "twitter-clone-api"
     build: .
     volumes:
-      - .:/go/src/github.com/NasSilverBullet/twitter-clone-api
+      - .:/go/src/github.com/NasSilverBullet/twitter-clone-api/app
     ports:
       - "8080:8080"
-    working_dir: /go/src/github.com/NasSilverBullet/twitter-clone-api
+    working_dir: /go/src/github.com/NasSilverBullet/twitter-clone-api/app
     command: sh -c "realize start --name='api' --run"

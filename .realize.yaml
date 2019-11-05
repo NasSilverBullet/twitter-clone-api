@@ -9,6 +9,7 @@ schema:
     install:
       status: true
       method: go build -o /go/bin/twitter-clone-api
+      dir: app
     run:
       status: true
       method: /go/bin/twitter-clone-api
