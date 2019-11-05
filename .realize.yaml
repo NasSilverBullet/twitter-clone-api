@@ -6,8 +6,12 @@ schema:
 - name: api
   path: .
   commands:
+    install:
+      status: true
+      method: go build -o /go/bin/twitter-clone-api
     run:
       status: true
+      method: /go/bin/twitter-clone-api
   watcher:
     extensions:
     - go
