@@ -3,26 +3,28 @@ package interfaces
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 )
 
-type UsersHandler struct{}
+type UsersHandler struct {
+	UserInteractor *usecases.UsersInteractor
+}
 
 func NewUsersHandler() *UsersHandler {
-	return &UsersHandler{}
+	return &UsersHandler{
+		UserInteractor: &usecases.UsersInteractor{},
+	}
 }
 
 func (uh *UsersHandler) Index(w http.ResponseWriter, r *http.Request) {
-
-	users := []struct {
-		Name string `json:"name"`
-		Sex  string `json:"sex"`
-	}{
-		{"Luke Skywalker", "male"},
-		{"Leia Organa", "female"},
-		{"Han Solo", "male"},
-		{"Chewbacca", "male"},
+	u, err := uh.UserInteractor.Index()
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(u)
 }
