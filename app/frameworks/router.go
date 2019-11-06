@@ -5,16 +5,17 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
 	"github.com/go-chi/chi"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World")
-}
-
 func Routes() {
+
 	r := chi.NewRouter()
-	r.Get("/", handler)
+
+	uh := interfaces.NewUsersHandler()
+
+	r.Get("/users", uh.Index)
 
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		fmt.Fprintln(os.Stderr, err)
