@@ -1,0 +1,77 @@
+#!/bin/sh
+
+load_env() {
+  . /go/src/github.com/NasSilverBullet/twitter-clone-api/.env
+}
+
+up() {
+  echo "start migrate up";
+
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE";
+
+  SQL=`find . -print | grep migrations | grep up.sql | sort | xargs cat`
+
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL";
+
+  echo "finish migrate up"
+}
+
+down() {
+  echo "start migrate down";
+
+  SQL=`find . -print | grep migrations | grep down.sql | sort -r | xargs cat`
+
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL";
+
+  echo "finish migrate down"
+}
+
+seed() {
+  echo "start db seed"
+
+  SQL=`find . -print | grep seeds | grep .sql | sort | xargs cat`
+
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL";
+
+  echo "finish db seed"
+}
+
+login() {
+  mysql --host=mysql -P 3306 --password=password "$DB_DATABASE";
+}
+
+default() {
+  echo "exit";
+}
+
+run() {
+  case "$1" in
+    "up" ) up ;;
+    "down" ) down ;;
+    "seed" ) seed ;;
+    "login" ) login ;;
+    * ) default $1 ;;
+  esac
+}
+
+load_env
+
+if [ $# -lt 1 ]; then
+  echo "plase select migrate mode ( up | down | seed | login )";
+
+  read key;
+
+  run $key;
+
+  exit 0;
+fi
+
+if [ $# -eq 1 ]; then
+  run $1;
+
+  exit 0;
+fi
+
+echo "please set correct command"
+
+exit 1;

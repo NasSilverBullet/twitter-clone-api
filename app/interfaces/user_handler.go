@@ -11,9 +11,13 @@ type UserHandler struct {
 	UserInteractor *usecases.UserInteractor
 }
 
-func NewUserHandler() *UserHandler {
+func NewUserHandler(sqlHandler SQLHandler) *UserHandler {
 	return &UserHandler{
-		UserInteractor: &usecases.UserInteractor{},
+		UserInteractor: &usecases.UserInteractor{
+			UserRepository: &UserRepository{
+				SQLHandler: sqlHandler,
+			},
+		},
 	}
 }
 

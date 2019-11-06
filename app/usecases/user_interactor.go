@@ -1,20 +1,16 @@
 package usecases
 
-type UserInteractor struct{}
+import "github.com/NasSilverBullet/twitter-clone-api/app/entities"
 
-func (ui *UserInteractor) Index() ([]struct {
-	Name string `json:"name"`
-	Sex  string `json:"sex"`
-}, error) {
-	users := []struct {
-		Name string `json:"name"`
-		Sex  string `json:"sex"`
-	}{
-		{"Luke Skywalker", "male"},
-		{"Leia Organa", "female"},
-		{"Han Solo", "male"},
-		{"Chewbacca", "male"},
+type UserInteractor struct {
+	UserRepository
+}
+
+func (ui *UserInteractor) Index() (entities.Users, error) {
+	us, err := ui.UserRepository.FindAll()
+	if err != nil {
+		return nil, err
 	}
 
-	return users, nil
+	return us, nil
 }
