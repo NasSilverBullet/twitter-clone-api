@@ -1,7 +1,9 @@
 package frameworks
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
 	"github.com/go-chi/chi"
@@ -15,7 +17,7 @@ func Routes(sqlHandler interfaces.SQLHandler) error {
 
 	r.Get("/users", uh.Index)
 
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")), r); err != nil {
 		return err
 	}
 
