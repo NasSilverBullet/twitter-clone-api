@@ -13,7 +13,7 @@ func Routes() {
 
 	r := chi.NewRouter()
 
-	uh := interfaces.NewUsersHandler()
+	uh := interfaces.NewUserHandler()
 
 	r.Get("/users", uh.Index)
 

@@ -7,17 +7,17 @@ import (
 	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 )
 
-type UsersHandler struct {
-	UserInteractor *usecases.UsersInteractor
+type UserHandler struct {
+	UserInteractor *usecases.UserInteractor
 }
 
-func NewUsersHandler() *UsersHandler {
-	return &UsersHandler{
-		UserInteractor: &usecases.UsersInteractor{},
+func NewUserHandler() *UserHandler {
+	return &UserHandler{
+		UserInteractor: &usecases.UserInteractor{},
 	}
 }
 
-func (uh *UsersHandler) Index(w http.ResponseWriter, r *http.Request) {
+func (uh *UserHandler) Index(w http.ResponseWriter, r *http.Request) {
 	u, err := uh.UserInteractor.Index()
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")

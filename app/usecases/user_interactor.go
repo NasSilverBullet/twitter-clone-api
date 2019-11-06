@@ -1,8 +1,8 @@
 package usecases
 
-type UsersInteractor struct{}
+type UserInteractor struct{}
 
-func (ui *UsersInteractor) Index() ([]struct {
+func (ui *UserInteractor) Index() ([]struct {
 	Name string `json:"name"`
 	Sex  string `json:"sex"`
 }, error) {
