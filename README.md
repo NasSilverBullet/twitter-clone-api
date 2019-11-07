@@ -15,22 +15,34 @@ $ curl -s localhost:8080/users | jq
   {
     "id": 1,
     "name": "Luke Skywalker",
-    "email": "luke@example.com"
+    "email": "luke@example.com",
+    "created": "2019-11-07T02:04:23+09:00",
+    "updated_at": "2019-11-07T02:04:23+09:00",
+    "deleted_at": "0001-01-01T00:00:00Z"
   },
   {
     "id": 2,
     "name": "Leia Organa",
-    "email": "leia@example.com"
+    "email": "leia@example.com",
+    "created": "2019-11-07T02:04:23+09:00",
+    "updated_at": "2019-11-07T02:04:23+09:00",
+    "deleted_at": "0001-01-01T00:00:00Z"
   },
   {
     "id": 3,
     "name": "Han Solo",
-    "email": "han@example.com"
+    "email": "han@example.com",
+    "created": "2019-11-07T02:04:23+09:00",
+    "updated_at": "2019-11-07T02:04:23+09:00",
+    "deleted_at": "0001-01-01T00:00:00Z"
   },
   {
     "id": 4,
     "name": "Chewbacca",
-    "email": "chewbacca@example.com"
+    "email": "chewbacca@example.com",
+    "created": "2019-11-07T02:04:23+09:00",
+    "updated_at": "2019-11-07T02:04:23+09:00",
+    "deleted_at": "0001-01-01T00:00:00Z"
   }
 ]
 ```
