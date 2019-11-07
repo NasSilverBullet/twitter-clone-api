@@ -38,8 +38,11 @@ $ curl -s localhost:8080/users | jq
 ## Architecture
 
 ```sh
-$ tree
+$ tree -a -I "\.DS_Store|\.git"
 .
+├── .env
+├── .gitignore
+├── .realize.yaml
 ├── LICENSE.txt
 ├── README.md
 ├── app
