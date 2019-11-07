@@ -2,7 +2,9 @@ package interfaces
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 )
@@ -22,13 +24,14 @@ func NewUserHandler(sqlHandler SQLHandler) *UserHandler {
 }
 
 func (uh *UserHandler) Index(w http.ResponseWriter, r *http.Request) {
-	u, err := uh.UserInteractor.Index()
+	us, err := uh.UserInteractor.Index()
 	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(500)
 		json.NewEncoder(w).Encode(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(u)
+	json.NewEncoder(w).Encode(us)
 }
