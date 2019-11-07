@@ -23,8 +23,8 @@ func LoadEnv() error {
 	}
 
 	for _, l := range lines {
-		pair := strings.Split(l, "=")
-		os.Setenv(pair[0], pair[1])
+		e := strings.Split(l, "=")
+		os.Setenv(e[0], e[1])
 	}
 
 	return nil
