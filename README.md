@@ -49,6 +49,10 @@ $ curl -s localhost:8080/users | jq
 
 ## Architecture
 
+![The Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg "The Clean Architecture")
+
+Refs: <https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html>
+
 ```sh
 $ tree -a -I "\.DS_Store|\.git"
 .
