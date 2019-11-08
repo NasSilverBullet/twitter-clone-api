@@ -25,7 +25,6 @@ func (ur *UserRepository) FindAll() (entities.Users, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer rows.Close()
 
 	us := make(entities.Users, 0)
@@ -66,7 +65,6 @@ func (ur *UserRepository) FindByID(id int64) (*entities.User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer rows.Close()
 
 	if !rows.Next() {

@@ -15,7 +15,6 @@ func LoadEnv(logger usecases.Logger) error {
 	if err != nil {
 		return err
 	}
-
 	defer f.Close()
 
 	lines := make([]string, 0, 100)

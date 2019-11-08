@@ -58,9 +58,7 @@ func (s *SQLHandler) Begin() (interfaces.Tx, error) {
 		return nil, err
 	}
 
-	tx := &Tx{t}
-
-	return tx, nil
+	return &Tx{t}, nil
 }
 
 func (s *SQLHandler) Query(query string, args ...interface{}) (interfaces.Row, error) {
@@ -69,9 +67,7 @@ func (s *SQLHandler) Query(query string, args ...interface{}) (interfaces.Row, e
 		return nil, err
 	}
 
-	row := &Row{rows}
-
-	return row, nil
+	return &Row{rows}, nil
 }
 
 func (s *SQLHandler) Exec(query string, args ...interface{}) (interfaces.Result, error) {

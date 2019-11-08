@@ -51,7 +51,6 @@ func (uh *UserHandler) Get(w http.ResponseWriter, r *http.Request) {
 	uh.Logger.Infof("%s: %s => Start user handler's Get", r.Method, r.URL.Path)
 
 	_, idStr := path.Split(r.URL.Path)
-
 	id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		uh.Logger.Error(err)
