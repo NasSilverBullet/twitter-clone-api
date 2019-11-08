@@ -1,6 +1,7 @@
 package frameworks
 
 import (
+	"fmt"
 	"io"
 	"log"
 
@@ -22,25 +23,25 @@ func NewLogger(o, e io.Writer) usecases.Logger {
 }
 
 func (l *Logger) Info(v ...interface{}) {
-	l.I.Println(v...)
+	l.I.Output(2, fmt.Sprint(v...))
 }
 
 func (l *Logger) Infof(format string, v ...interface{}) {
-	l.I.Printf(format, v...)
+	l.I.Output(2, fmt.Sprintf(format, v...))
 }
 
 func (l *Logger) Debug(v ...interface{}) {
-	l.D.Println(v...)
+	l.D.Output(2, fmt.Sprint(v...))
 }
 
 func (l *Logger) Debugf(format string, v ...interface{}) {
-	l.D.Printf(format, v...)
+	l.D.Output(2, fmt.Sprintf(format, v...))
 }
 
 func (l *Logger) Error(v ...interface{}) {
-	l.E.Println(v...)
+	l.E.Output(2, fmt.Sprint(v...))
 }
 
 func (l *Logger) Errorf(format string, v ...interface{}) {
-	l.E.Printf(format, v...)
+	l.E.Output(2, fmt.Sprintf(format, v...))
 }
