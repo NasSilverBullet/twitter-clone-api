@@ -14,3 +14,12 @@ func (ui *UserInteractor) List() (entities.Users, error) {
 
 	return us, nil
 }
+
+func (ui *UserInteractor) Get(id int64) (*entities.User, error) {
+	u, err := ui.UserRepository.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return u, nil
+}

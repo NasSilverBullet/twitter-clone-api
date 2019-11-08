@@ -65,3 +65,57 @@ func (ur *UserRepository) FindAll() (entities.Users, error) {
 
 	return us, nil
 }
+
+func (ur *UserRepository) FindByID(id int64) (*entities.User, error) {
+	const query = `
+		SELECT
+			id
+			name,
+			email,
+			created_at,
+			updated_at,
+			deleted_at
+		FROM
+			users
+		WHERE
+			id = ?
+	`
+
+	rows, err := ur.SQLHandler.Query(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	if !rows.Next() {
+		return nil, nil
+	}
+
+	var (
+		name      string
+		email     string
+		createdAt time.Time
+		updatedAt time.Time
+		deletedAt time.Time
+	)
+
+	if err = rows.Scan(&name, &email, &createdAt, &updatedAt, &deletedAt); err != nil {
+		return nil, err
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	u := &entities.User{
+		ID:        id,
+		Name:      name,
+		Email:     email,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
+		DeletedAt: deletedAt,
+	}
+
+	return u, nil
+}
