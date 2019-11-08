@@ -29,9 +29,18 @@ func (l *Logger) Infof(format string, v ...interface{}) {
 	l.I.Printf(format, v...)
 }
 
+func (l *Logger) Debug(v ...interface{}) {
+	l.D.Println(v...)
+}
+
 func (l *Logger) Debugf(format string, v ...interface{}) {
 	l.D.Printf(format, v...)
 }
+
+func (l *Logger) Error(v ...interface{}) {
+	l.E.Println(v...)
+}
+
 func (l *Logger) Errorf(format string, v ...interface{}) {
 	l.E.Printf(format, v...)
 }
