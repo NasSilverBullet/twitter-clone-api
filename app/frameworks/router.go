@@ -17,7 +17,7 @@ func Routes(logger usecases.Logger, sqlHandler interfaces.SQLHandler) error {
 
 	uh := interfaces.NewUserHandler(logger, sqlHandler)
 
-	r.Get("/users", uh.Index)
+	r.Get("/users", uh.List)
 
 	if err := http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")), r); err != nil {
 		return err

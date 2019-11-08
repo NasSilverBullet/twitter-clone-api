@@ -23,8 +23,8 @@ func NewUserHandler(logger usecases.Logger, sqlHandler SQLHandler) *UserHandler 
 	}
 }
 
-func (uh *UserHandler) Index(w http.ResponseWriter, r *http.Request) {
-	us, err := uh.UserInteractor.Index()
+func (uh *UserHandler) List(w http.ResponseWriter, r *http.Request) {
+	us, err := uh.UserInteractor.List()
 	if err != nil {
 		uh.Logger.Error(err)
 
