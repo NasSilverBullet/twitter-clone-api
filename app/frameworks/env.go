@@ -9,7 +9,7 @@ import (
 )
 
 func LoadEnv(logger usecases.Logger) error {
-	logger.Info("Start loading environment variables.")
+	logger.Info("Start loading environment variables")
 
 	f, err := os.Open(".env")
 	if err != nil {
@@ -31,6 +31,6 @@ func LoadEnv(logger usecases.Logger) error {
 		os.Setenv(e[0], e[1])
 	}
 
-	logger.Infof("Finish loading environment variables.")
+	logger.Infof("Finish loading environment variables")
 	return nil
 }

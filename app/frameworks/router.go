@@ -11,7 +11,7 @@ import (
 )
 
 func Routes(logger usecases.Logger, sqlHandler interfaces.SQLHandler) error {
-	logger.Info("Start running router")
+	logger.Info("Start running router..")
 
 	r := chi.NewRouter()
 
