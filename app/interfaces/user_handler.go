@@ -24,8 +24,7 @@ func NewUserHandler(logger usecases.Logger, sqlHandler SQLHandler) *UserHandler 
 }
 
 func (uh *UserHandler) List(w http.ResponseWriter, r *http.Request) {
-
-	uh.Logger.Info("Start user handler's List")
+	uh.Logger.Infof("%s: %s => %s", r.Method, r.URL.Path, "Start user handler's List")
 
 	us, err := uh.UserInteractor.List()
 	if err != nil {
@@ -36,7 +35,7 @@ func (uh *UserHandler) List(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(err)
 	}
 
-	uh.Logger.Infof("Success find %d users", len(us))
+	uh.Logger.Infof("%s: %s => Success find %d users", r.Method, r.URL.Path, len(us))
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(us)
