@@ -14,7 +14,8 @@ func main() {
 }
 
 func run() error {
-	if err := frameworks.LoadEnv(); err != nil {
+	logger := frameworks.NewLogger(os.Stdout, os.Stderr)
+	if err := frameworks.LoadEnv(logger); err != nil {
 		return err
 	}
 

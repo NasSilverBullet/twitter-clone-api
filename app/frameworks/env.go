@@ -4,9 +4,13 @@ import (
 	"bufio"
 	"os"
 	"strings"
+
+	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 )
 
-func LoadEnv() error {
+func LoadEnv(logger usecases.Logger) error {
+	logger.Info("Start loading environment variables.")
+
 	f, err := os.Open(".env")
 	if err != nil {
 		return err
@@ -27,5 +31,6 @@ func LoadEnv() error {
 		os.Setenv(e[0], e[1])
 	}
 
+	logger.Infof("Finish loading environment variables.")
 	return nil
 }
