@@ -28,8 +28,8 @@ type Row struct {
 
 func NewSQLHandler(logger usecases.Logger) (interfaces.SQLHandler, error) {
 	logger.Info("Start opening a database specified by its database driver")
-	sqlHandler := &SQLHandler{}
-	dataSourceName := fmt.Sprintf(
+
+	dataSouce := fmt.Sprintf(
 		"%s:%s@(%s:%s)/%s?parseTime=true&loc=Asia%%2FTokyo&multiStatements=true",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
@@ -38,50 +38,44 @@ func NewSQLHandler(logger usecases.Logger) (interfaces.SQLHandler, error) {
 		os.Getenv("DB_DATABASE"),
 	)
 
-	conn, err := sql.Open(os.Getenv("DB_DRIVER"), dataSourceName)
+	conn, err := sql.Open(os.Getenv("DB_DRIVER"), dataSouce)
 	if err != nil {
 		return nil, err
 	}
-	err = conn.Ping()
-	if err != nil {
+
+	if err = conn.Ping(); err != nil {
 		return nil, err
 	}
-	sqlHandler.Conn = conn
 
-	logger.Info("Finish opening a database specified by its database driver")
+	logger.Info("Finished opening a database specified by its database driver")
 
-	return sqlHandler, nil
+	return &SQLHandler{conn}, nil
 }
 
 func (s *SQLHandler) Begin() (interfaces.Tx, error) {
 	t, err := s.Conn.Begin()
-
 	if err != nil {
 		return nil, err
 	}
 
-	tx := &Tx{}
-	tx.Tx = t
+	tx := &Tx{t}
 
 	return tx, nil
 }
 
 func (s *SQLHandler) Query(query string, args ...interface{}) (interfaces.Row, error) {
 	rows, err := s.Conn.Query(query, args...)
-
 	if err != nil {
 		return nil, err
 	}
 
-	row := &Row{}
-	row.Rows = rows
+	row := &Row{rows}
 
 	return row, nil
 }
 
 func (s *SQLHandler) Exec(query string, args ...interface{}) (interfaces.Result, error) {
 	result, err := s.Conn.Exec(query, args...)
-
 	if err != nil {
 		return nil, err
 	}
@@ -90,9 +84,7 @@ func (s *SQLHandler) Exec(query string, args ...interface{}) (interfaces.Result,
 }
 
 func (t Tx) Commit() error {
-	err := t.Tx.Commit()
-
-	if err != nil {
+	if err := t.Tx.Commit(); err != nil {
 		return err
 	}
 
@@ -100,9 +92,7 @@ func (t Tx) Commit() error {
 }
 
 func (t Tx) Rollback() error {
-	err := t.Tx.Rollback()
-
-	if err != nil {
+	if err := t.Tx.Rollback(); err != nil {
 		return err
 	}
 
@@ -111,7 +101,6 @@ func (t Tx) Rollback() error {
 
 func (t Tx) Exec(query string, args ...interface{}) (interfaces.Result, error) {
 	result, err := t.Tx.Exec(query, args...)
-
 	if err != nil {
 		return nil, err
 	}

@@ -1,8 +1,6 @@
 package interfaces
 
 import (
-	"time"
-
 	"github.com/NasSilverBullet/twitter-clone-api/app/entities"
 )
 
@@ -24,36 +22,19 @@ func (ur *UserRepository) FindAll() (entities.Users, error) {
 	`
 
 	rows, err := ur.SQLHandler.Query(query)
-
-	defer rows.Close()
-
 	if err != nil {
 		return nil, err
 	}
 
+	defer rows.Close()
+
 	us := make(entities.Users, 0)
 
 	for rows.Next() {
-		var (
-			id        int64
-			name      string
-			email     string
-			createdAt time.Time
-			updatedAt time.Time
-			deletedAt time.Time
-		)
+		u := &entities.User{}
 
-		if err = rows.Scan(&id, &name, &email, &createdAt, &updatedAt, &deletedAt); err != nil {
+		if err = rows.Scan(&u.ID, &u.Name, &u.Email, &u.CreatedAt, &u.UpdatedAt, &u.DeletedAt); err != nil {
 			return nil, err
-		}
-
-		u := &entities.User{
-			ID:        id,
-			Name:      name,
-			Email:     email,
-			CreatedAt: createdAt,
-			UpdatedAt: updatedAt,
-			DeletedAt: deletedAt,
 		}
 
 		us = append(us, u)
@@ -69,7 +50,7 @@ func (ur *UserRepository) FindAll() (entities.Users, error) {
 func (ur *UserRepository) FindByID(id int64) (*entities.User, error) {
 	const query = `
 		SELECT
-			id
+			id,
 			name,
 			email,
 			created_at,
@@ -92,29 +73,14 @@ func (ur *UserRepository) FindByID(id int64) (*entities.User, error) {
 		return nil, nil
 	}
 
-	var (
-		name      string
-		email     string
-		createdAt time.Time
-		updatedAt time.Time
-		deletedAt time.Time
-	)
+	u := &entities.User{}
 
-	if err = rows.Scan(&name, &email, &createdAt, &updatedAt, &deletedAt); err != nil {
+	if err = rows.Scan(&u.ID, &u.Name, &u.Email, &u.CreatedAt, &u.UpdatedAt, &u.DeletedAt); err != nil {
 		return nil, err
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, err
-	}
-
-	u := &entities.User{
-		ID:        id,
-		Name:      name,
-		Email:     email,
-		CreatedAt: createdAt,
-		UpdatedAt: updatedAt,
-		DeletedAt: deletedAt,
 	}
 
 	return u, nil

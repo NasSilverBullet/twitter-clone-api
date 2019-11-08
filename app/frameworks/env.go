@@ -15,6 +15,7 @@ func LoadEnv(logger usecases.Logger) error {
 	if err != nil {
 		return err
 	}
+
 	defer f.Close()
 
 	lines := make([]string, 0, 100)
@@ -22,15 +23,19 @@ func LoadEnv(logger usecases.Logger) error {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
+
 	if err := scanner.Err(); err != nil {
 		return err
 	}
 
 	for _, l := range lines {
 		e := strings.Split(l, "=")
-		os.Setenv(e[0], e[1])
+		if err := os.Setenv(e[0], e[1]); err != nil {
+			return err
+		}
 	}
 
-	logger.Infof("Finish loading environment variables")
+	logger.Infof("Finished loading environment variables")
+
 	return nil
 }

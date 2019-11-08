@@ -8,14 +8,12 @@ import (
 	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
 	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
 )
 
 func Routes(logger usecases.Logger, sqlHandler interfaces.SQLHandler) error {
 	logger.Info("Start running router..")
 
 	r := chi.NewRouter()
-	r.Use(middleware.RequestID)
 
 	uh := interfaces.NewUserHandler(logger, sqlHandler)
 

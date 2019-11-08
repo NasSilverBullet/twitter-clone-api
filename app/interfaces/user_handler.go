@@ -26,7 +26,7 @@ func NewUserHandler(logger usecases.Logger, sqlHandler SQLHandler) *UserHandler 
 }
 
 func (uh *UserHandler) List(w http.ResponseWriter, r *http.Request) {
-	uh.Logger.Infof("%s: %s => %s", r.Method, r.URL.Path, "Start user handler's List")
+	uh.Logger.Infof("%s: %s => Start user handler's List", r.Method, r.URL.Path)
 
 	us, err := uh.UserInteractor.List()
 	if err != nil {
@@ -35,20 +35,24 @@ func (uh *UserHandler) List(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(500)
 		json.NewEncoder(w).Encode(err)
+
+		return
 	}
 
 	uh.Logger.Infof("%s: %s => Success find %d users", r.Method, r.URL.Path, len(us))
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(us)
+
+	uh.Logger.Infof("%s: %s => Finished user handler's List", r.Method, r.URL.Path)
 }
 
 func (uh *UserHandler) Get(w http.ResponseWriter, r *http.Request) {
-	uh.Logger.Infof("%s: %s => %s", r.Method, r.URL.Path, "Start user handler's Get")
+	uh.Logger.Infof("%s: %s => Start user handler's Get", r.Method, r.URL.Path)
 
-	_, idstr := path.Split(r.URL.Path)
+	_, idStr := path.Split(r.URL.Path)
 
-	id, err := strconv.ParseInt(idstr, 10, 64)
+	id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		uh.Logger.Error(err)
 
@@ -72,8 +76,10 @@ func (uh *UserHandler) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uh.Logger.Infof("%s: %s => Success get user", r.Method, r.URL.Path)
+	uh.Logger.Infof(`%s: %s => Success get user >> {"id":%d,"name":%s}`, r.Method, r.URL.Path, u.ID, u.Name)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(u)
+
+	uh.Logger.Infof("%s: %s => Finished user handler's Get", r.Method, r.URL.Path)
 }
