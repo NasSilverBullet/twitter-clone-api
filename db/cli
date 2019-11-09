@@ -9,9 +9,9 @@ up() {
 
   mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE"
 
-  SQL=`find . -print | grep migrations | grep up.sql | sort | xargs cat`
+  sql=`find . -print | grep migrations | grep up.sql | sort | xargs cat`
 
-  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL"
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish migrate up"
 }
@@ -19,9 +19,9 @@ up() {
 down() {
   echo "start migrate down"
 
-  SQL=`find . -print | grep migrations | grep down.sql | sort -r | xargs cat`
+  sql=`find . -print | grep migrations | grep down.sql | sort -r | xargs cat`
 
-  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL"
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish migrate down"
 }
@@ -29,9 +29,9 @@ down() {
 seed() {
   echo "start db seed"
 
-  SQL=`find . -print | grep seeds | grep .sql | sort | xargs cat`
+  sql=`find . -print | grep seeds | grep .sql | sort | xargs cat`
 
-  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $SQL"
+  mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish db seed"
 }
