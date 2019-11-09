@@ -94,7 +94,17 @@ func (uh *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 		uh.Logger.Error(err)
 
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(500)
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(err)
+
+		return
+	}
+
+	if err := uh.Validator.Struct(u); err != nil {
+		uh.Logger.Error(err)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(err)
 
 		return
