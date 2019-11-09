@@ -63,8 +63,11 @@ default() {
 run() {
   case "$1" in
     "up" ) up ;;
+
     "down" ) down ;;
+
     "seed" ) seed ;;
+
     "gen" )
       if [ $# -eq 1 ]; then
         echo -n "please input table name : "
@@ -75,7 +78,9 @@ run() {
         gen $2
       fi
       ;;
+
     "login" ) login ;;
+
     * ) default $1 ;;
   esac
 }
