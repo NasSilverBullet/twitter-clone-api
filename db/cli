@@ -10,7 +10,6 @@ up() {
   mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE"
 
   sql=`find . -print | grep migrations | grep up.sql | sort | xargs cat`
-
   mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish migrate up"
@@ -20,7 +19,6 @@ down() {
   echo "start migrate down"
 
   sql=`find . -print | grep migrations | grep down.sql | sort -r | xargs cat`
-
   mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish migrate down"
@@ -30,7 +28,6 @@ seed() {
   echo "start db seed"
 
   sql=`find . -print | grep seeds | grep .sql | sort | xargs cat`
-
   mysql --host="$DB_HOST" -P "$DB_PORT" --password="$DB_PASSWORD" -e "USE $DB_DATABASE; $sql"
 
   echo "finish db seed"
@@ -38,12 +35,14 @@ seed() {
 
 gen() {
   prefix=`TZ=UTC-9 date +%Y%m%d%H%M%S`
-  upf="migrations/"$prefix"_create_"$1"_table.up.sql"
-  downf="migrations/"$prefix"_create_"$1"_table.down.sql"
-  seedf="seeds/"$1"_table.sql"
 
+  upf="migrations/"$prefix"_create_"$1"_table.up.sql"
   touch $upf
+
+  downf="migrations/"$prefix"_create_"$1"_table.down.sql"
   touch $downf
+
+  seedf="seeds/"$1"_table.sql"
   touch $seedf
 
   echo "$upf"
@@ -57,7 +56,7 @@ login() {
 }
 
 default() {
-  echo "exit";
+  echo "exit"
 }
 
 run() {
@@ -71,9 +70,11 @@ run() {
     "gen" )
       if [ $# -eq 1 ]; then
         echo -n "please input table name : "
+
         read key
         gen $key
       fi
+
       if [ $# -eq 2 ]; then
         gen $2
       fi
@@ -95,7 +96,6 @@ if [ $# -lt 1 ]; then
   echo -n "plase select migrate mode ( up | down | seed | gen | login ) : "
 
   read key
-
   run $key
 
   exit 0
