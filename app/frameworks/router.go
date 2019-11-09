@@ -10,13 +10,13 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-func Routes(logger interfaces.Logger, sqlHandler interfaces.SQLHandler) error {
+func Routes(logger interfaces.Logger, validator interfaces.Validator, sqlHandler interfaces.SQLHandler) error {
 	logger.Info("Start running router..")
 
 	r := chi.NewRouter()
 	r.Use(middleware.AllowContentType("application/json"))
 
-	uh := interfaces.NewUserHandler(logger, sqlHandler)
+	uh := interfaces.NewUserHandler(logger, validator, sqlHandler)
 
 	r.Route("/users", func(r chi.Router) {
 		r.Get("/", uh.List)

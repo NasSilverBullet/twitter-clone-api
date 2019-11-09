@@ -13,16 +13,18 @@ import (
 type UserHandler struct {
 	UserInteractor *usecases.UserInteractor
 	Logger         Logger
+	Validator      Validator
 }
 
-func NewUserHandler(logger Logger, sqlHandler SQLHandler) *UserHandler {
+func NewUserHandler(logger Logger, validator Validator, sqlHandler SQLHandler) *UserHandler {
 	return &UserHandler{
 		UserInteractor: &usecases.UserInteractor{
 			UserRepository: &UserRepository{
 				SQLHandler: sqlHandler,
 			},
 		},
-		Logger: logger,
+		Logger:    logger,
+		Validator: validator,
 	}
 }
 
