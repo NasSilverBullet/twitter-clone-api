@@ -1,3 +1,5 @@
+TRUNCATE TABLE users;
+
 INSERT INTO users (name, email)
   VALUES('Luke Skywalker', 'luke@example.com');
 
