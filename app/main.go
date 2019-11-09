@@ -8,6 +8,7 @@ import (
 
 func main() {
 	logger := frameworks.NewLogger(os.Stdout, os.Stderr)
+
 	if err := frameworks.LoadEnv(logger); err != nil {
 		logger.Error(err)
 	}

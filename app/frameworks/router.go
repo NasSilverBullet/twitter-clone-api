@@ -17,7 +17,6 @@ func Routes(logger interfaces.Logger, validator interfaces.Validator, sqlHandler
 	r.Use(middleware.AllowContentType("application/json"))
 
 	uh := interfaces.NewUserHandler(logger, validator, sqlHandler)
-
 	r.Route("/users", func(r chi.Router) {
 		r.Get("/", uh.List)
 		r.Get("/{id}", uh.Get)
