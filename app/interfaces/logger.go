@@ -1,4 +1,4 @@
-package usecases
+package interfaces
 
 type Logger interface {
 	Info(v ...interface{})

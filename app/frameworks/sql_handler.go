@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
-	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -26,7 +25,7 @@ type Row struct {
 	Rows *sql.Rows
 }
 
-func NewSQLHandler(logger usecases.Logger) (interfaces.SQLHandler, error) {
+func NewSQLHandler(logger interfaces.Logger) (interfaces.SQLHandler, error) {
 	logger.Info("Start opening a database specified by its database driver")
 
 	dataSouce := fmt.Sprintf(

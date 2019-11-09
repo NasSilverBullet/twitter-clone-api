@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
+	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
 )
 
-func LoadEnv(logger usecases.Logger) error {
+func LoadEnv(logger interfaces.Logger) error {
 	logger.Info("Start loading environment variables")
 
 	f, err := os.Open(".env")

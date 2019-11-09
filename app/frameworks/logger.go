@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
+	"github.com/NasSilverBullet/twitter-clone-api/app/interfaces"
 )
 
 type Logger struct {
@@ -14,7 +14,7 @@ type Logger struct {
 	E *log.Logger
 }
 
-func NewLogger(o, e io.Writer) usecases.Logger {
+func NewLogger(o, e io.Writer) interfaces.Logger {
 	return &Logger{
 		I: log.New(o, "[INFO] ", log.LstdFlags),
 		D: log.New(o, "[DEBUG] ", log.Llongfile|log.Ldate|log.Lmicroseconds),

@@ -12,10 +12,10 @@ import (
 
 type UserHandler struct {
 	UserInteractor *usecases.UserInteractor
-	Logger         usecases.Logger
+	Logger         Logger
 }
 
-func NewUserHandler(logger usecases.Logger, sqlHandler SQLHandler) *UserHandler {
+func NewUserHandler(logger Logger, sqlHandler SQLHandler) *UserHandler {
 	return &UserHandler{
 		UserInteractor: &usecases.UserInteractor{
 			UserRepository: &UserRepository{
