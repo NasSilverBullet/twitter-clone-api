@@ -23,3 +23,12 @@ func (ui *UserInteractor) Get(id int64) (*entities.User, error) {
 
 	return u, nil
 }
+
+func (ui *UserInteractor) Create(u *entities.User) (int64, error) {
+	id, err := ui.UserRepository.Save(u)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}

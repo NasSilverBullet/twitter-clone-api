@@ -6,6 +6,7 @@ import (
 	"path"
 	"strconv"
 
+	"github.com/NasSilverBullet/twitter-clone-api/app/entities"
 	"github.com/NasSilverBullet/twitter-clone-api/app/usecases"
 )
 
@@ -81,4 +82,39 @@ func (uh *UserHandler) Get(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(u)
 
 	uh.Logger.Infof("%s: %s => Finished user handler's Get", r.Method, r.URL.Path)
+}
+
+func (uh *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
+	uh.Logger.Infof("%s: %s => Start user handler's Create", r.Method, r.URL.Path)
+
+	var u *entities.User
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+		uh.Logger.Error(err)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(err)
+
+		return
+	}
+
+	uh.Logger.Infof(`%s: %s => Retrieved body >> {"name":%s,"email":%s}`, r.Method, r.URL.Path, u.Name, u.Email)
+
+	id, err := uh.UserInteractor.Create(u)
+	if err != nil {
+		uh.Logger.Error(err)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(err)
+
+		return
+	}
+
+	uh.Logger.Infof(`%s: %s => Success create user >> id %d`, r.Method, r.URL.Path, id)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(id)
+
+	uh.Logger.Infof("%s: %s => Finished user handler's Create", r.Method, r.URL.Path)
 }

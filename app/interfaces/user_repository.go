@@ -83,3 +83,34 @@ func (ur *UserRepository) FindByID(id int64) (*entities.User, error) {
 
 	return u, nil
 }
+
+func (ur *UserRepository) Save(u *entities.User) (int64, error) {
+	tx, err := ur.SQLHandler.Begin()
+	if err != nil {
+		return 0, nil
+	}
+
+	const query = `
+		INSERT INTO
+			users (name, email)
+		VALUES
+			(?, ?)
+	`
+
+	result, err := tx.Exec(query, u.Name, u.Email)
+	if err != nil {
+		tx.Rollback()
+		return 0, nil
+	}
+
+	if err = tx.Commit(); err != nil {
+		return 0, nil
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
