@@ -49,7 +49,9 @@ $ curl -s localhost:8080/users | jq
 
 ## Architecture
 
-![The Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg "The Clean Architecture")
+![The Clean Architecture](
+https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg "The Clean Architecture"
+)
 
 Refs: <https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html>
 
@@ -66,15 +68,21 @@ $ tree -a -I "\.DS_Store|\.git"
 │   │   └── user.go
 │   ├── frameworks
 │   │   ├── env.go
+│   │   ├── logger.go
 │   │   ├── router.go
-│   │   └── sql_handler.go
+│   │   ├── sql_handler.go
+│   │   └── validator.go
 │   ├── interfaces
+│   │   ├── logger.go
 │   │   ├── sql_handler.go
 │   │   ├── user_handler.go
-│   │   └── user_repository.go
+│   │   ├── user_repository.go
+│   │   ├── user_repository_test.go
+│   │   └── validator.go
 │   ├── main.go
 │   └── usecases
 │       ├── user_interactor.go
+│       ├── user_interactor_test.go
 │       └── user_repository.go
 ├── db
 │   ├── cli
@@ -93,6 +101,14 @@ $ tree -a -I "\.DS_Store|\.git"
 ├── go.mod
 └── go.sum
 ```
+
+## HTTP methods
+
+| Method | HTTP Mapping     | HTTP Request Body | HTTP Respose Body |
+|--------|------------------|-------------------|-------------------|
+| List   | GET  /users      | N/A               | Users             |
+| Get    | GET  /users/{id} | N/A               | User              |
+| Create | POST /users      | User              | UserID            |
 
 ## License
 
