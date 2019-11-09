@@ -85,6 +85,21 @@ $ tree -a -I "\.DS_Store|\.git"
 | Get    | GET  /users/{id} | N/A               | User              |
 | Create | POST /users      | User              | UserID            |
 
+## CURL exmaple
+
+```sh
+# GET /users
+$ curl localhost:8080/users
+
+# GET /users/{id}
+$ curl localhost:8080/users/1
+
+# POST /users
+$ curl localhost:8080/users \
+-H 'Content-Type: application/json' \
+-d '{"name":"Obi-Wan Kenobi","email":"obi-wan@example.com"}'
+```
+
 ## License
 
 MIT License. See LICENSE.txt for more information.
